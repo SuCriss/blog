@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客后台系统</title>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/layer/layer.js" ></script>
+    <script type="text/javascript" src="/JMEditor/scripts/markdown-it.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/JMEditor/scripts/highlightjs/styles/default.css">
+    <link rel="stylesheet" type="text/css" href="/JMEditor/style/github-markdown.css">
+    <script type="text/javascript" src="/JMEditor/scripts/highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="/JMEditor/scripts/highlightjs/styles/xcode.css">
+    <link rel="stylesheet" href="/JMEditor/style/blog-editor.css">
+    <script type="text/javascript" src="/JMEditor/scripts/ace/ace.js"></script>
+    <script type="text/javascript" src="/JMEditor/scripts/editor.js"></script>
+    <!--分页-->
+    <script src="/javascripts/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/pagination.css">
+
+    <style type="text/css">
+        body{
+            padding-top: 70px;/*有顶部固定导航条时设置*/
+            padding-bottom: 70px;/*有底部固定导航条时设置*/
+        }
+    </style>
+    <script type="text/javascript">
+
+        hljs.initHighlightingOnLoad();
+        //实例化markdown的对象
+        var md = markdownit({
+            highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return hljs.highlight(lang, str).value;
+                    } catch (__) {}
+                }
+                try {
+                    return hljs.highlightAuto(str).value;
+                } catch (__) {}
+
+                return '';
+            }
+        });
+    </script>
+
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">博客后台</a>
+        </div>
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active"><a href="#">首页</a></li>
+            </ul>
+
+        <!--向右对齐-->
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    admin <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/admin">退出</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" ></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-sm-2">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseOne">
+                                文章列表
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse <% if (open == 'article') {%> in <% } %>">
+                        <div class="panel-body">
+                            <a class="list-group-item <% if (path == '/article/articles') {%> active <% } %>" href="/article/articles">文章列表</a>
+                            <a class="list-group-item <% if (path == '/article/add') {%> active <% } %>" href="/article/add" >添加文章</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#collapseTwo">
+                                文章分类
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse <% if (open == 'tag') {%> in <% } %>">
+                        <div class="panel-body">
+                            <a class="list-group-item <% if (path == '/tag/tags') {%> active <% } %>" href="/tag/tags">分类列表</a>
+                            <a class="list-group-item <% if (path == '/tag/addtag') {%> active <% } %>" href="/tag/addtag">添加分类</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+

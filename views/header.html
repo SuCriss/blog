@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>欢迎博客</title>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/layer/layer.js" ></script>
+    <!--markdown-->
+    <script type="text/javascript" src="/JMEditor/scripts/markdown-it.min.js"></script>
+    <script type="text/javascript" src="/JMEditor/scripts/highlightjs/highlight.pack.js"></script>
+    <link rel="stylesheet" href="/JMEditor/scripts/highlightjs/styles/xcode.css">
+    <!--分页-->
+    <script src="/javascripts/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel="stylesheet" href="/stylesheets/pagination.css">
+    <style type="text/css">
+        body{
+
+            padding-top: 70px;/*有顶部固定导航条时设置*/
+
+            padding-bottom: 70px;/*有底部固定导航条时设置*/
+        }
+        h1{
+            font-size:22px;
+        }
+       #content{
+           font-size:15px;
+       }
+    </style>
+    <script type="text/javascript">
+
+        hljs.initHighlightingOnLoad();
+        //实例化markdown的对象
+        var md = markdownit({
+            highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return hljs.highlight(lang, str).value;
+                    } catch (__) {}
+                }
+                try {
+                    return hljs.highlightAuto(str).value;
+                } catch (__) {}
+
+                return '';
+            }
+        });
+    </script>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">个人博客</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="<% if (path == 'index') {%> active <% } %>"><a href="/">首页</a></li>
+                <li class="<% if (path == 'list') {%> active <% } %>"><a href="/list">文章列表</a></li>
+                <li><a href="https://gitee.com/explore/">资源下载</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        开发语言分类 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                        <% for(var i=0;i < tagList.length;i++){ %>
+
+                        <li><a href="/list?id=<%=tagList[i].id%>"><%=tagList[i].tagname%></a></li>
+                        <li class="divider"></li>
+                        <% } %>
+
+                    </ul>
+                </li>
+                <li class="<% if (path == 'about') {%> active <% } %>"><a href="/about">关于作者</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>

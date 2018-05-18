@@ -1,0 +1,102 @@
+<% include ../../header.html  %>
+
+<div class="col-sm-10">
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <caption>文章列表</caption>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>文章title</th>
+            <th>类别</th>
+            <th>发布时间</th>
+            <th>点击次数</th>
+            <th>赞</th>
+            <th>不赞</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% for (var i=0;i< articleList.length;i++) { %>
+
+        <tr>
+            <td><%=articleList[i].id%></td>
+            <td><%=articleList[i].title%></td>
+            <td><%=articleList[i].tag.tagname%></td>
+            <td><%=articleList[i].pubtime%></td>
+            <td><%=articleList[i].hits%></td>
+            <td><%=articleList[i].good%></td>
+            <td><%=articleList[i].bad%></td>
+            <td>
+                <a class="btn btn-primary view" data-id="<%=articleList[i].id%>">预览</a>
+                <a href="/article/updateArticle?id=<%=articleList[i].id%>" class="btn btn-primary" data-id="<%=articleList[i].id%>">修改</a>
+                <a class="btn btn btn-danger delete" data-id="<%=articleList[i].id%>">删除</a>
+            </td>
+        </tr>
+
+        <% } %>
+
+        </tbody>
+    </table>
+    <div class="pages">
+        <div id="Pagination"></div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+
+                </h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var totalPage = '<%=totalPage%>';
+        var page = '<%=currentPage%>';
+        $("#Pagination").pagination(totalPage,{current_page:(page-1),link_to:'/article/articles'});
+
+        $('.view').click(function(){
+
+            var aid = $(this).data('id');
+
+            //获取文章信息
+            $.get(
+                    '/article/queryById',
+                    {
+                        id:aid
+                    },
+                    function(data){
+
+                        $("#myModalLabel").text(data.article.title);
+                        $(".modal-body").html(md.render(data.article.content));
+                        $('#myModal').modal('show');
+                    },
+                    "json"
+            );
+        });
+    });
+</script>
+
+
+<% include ../../footer.html  %>
+

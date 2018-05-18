@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客后台系统</title>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/layer/layer.js" ></script>
+    <style type="text/css">
+
+        body{
+
+            padding-top: 70px;/*有顶部固定导航条时设置*/
+            padding-bottom: 70px;/*有底部固定导航条时设置*/
+            background: url("/images/background/bg.jpg") no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                管理员注册
+            </h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" action="/admin/register" method="post">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-4 control-label">账号</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="firstname" name="username" placeholder="请输入账号" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-4 control-label">密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-4 control-label">确认密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="请再次确认密码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-7">
+                        <button type="button" onclick="location.href='/admin'" class="btn btn-primary btn-md">登录</button>
+                        <button type="button" id="reg" class="btn btn-success btn-md">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="navbar-fixed-bottom">
+    <div class="container text-center">
+        <span>Copyright © 2018</span>
+    </div>
+</footer>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('#reg').click(function () {
+                var firstname = $("#firstname").val();
+                var password = $("#password").val();
+                var rePassword = $('#rePassword').val()
+            if(!firstname){
+                layer.msg('请输入账号')
+                return false;
+            }
+            if(!password){
+                layer.msg('请输入密码');
+                return false;
+            }
+            if(!rePassword){
+                layer.msg('请输入确认密码')
+                return false;
+            }
+            if(password !== rePassword){
+                    layer.msg('您输入的密码不一致，请重新输入',function () {
+                        $('#rePassword').val('')
+                    });
+                    return false
+            }
+                $.ajax({
+                    url:'/admin/register',
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        username : firstname,
+                        password : password,
+                    },
+                    success:function(data){
+
+                        layer.msg(data.msg, {
+
+                            time: 2000 //2s后自动关闭
+
+                        },function(){
+                            window.location.href = '/admin'
+                        });
+                    },
+                    error:function(error){
+
+                        layer.msg(error.msg);
+                    }
+
+                });
+        })
+    });
+</script>
+</body>
+</html>

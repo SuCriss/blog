@@ -1,0 +1,68 @@
+
+<% include header.html %>
+<div class="container-fluid">
+<div class="row-fluid">
+    <div class="col-sm-9">
+        <div class="row-fluid">
+            <div class="jumbotron">
+                <div class="container">
+                    <p>从不羡慕别人的优秀，因为相信自己也可以优秀。</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;闲下来时看看书，书本里的故事，总有你学到的人生。</p>
+                    <!--<p style="margin-left: 500px">-&#45;&#45;By:高旭旭</p>-->
+                </div>
+            </div>
+
+            <% for (var i=0;i< articleList.length;i++) { %>
+
+            <div class="span4 panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-3">
+                        <img src="<%=articleList[i].leftLogo %>" style="width: 200px;height: 150px;">
+                    </div>
+                    <div class="col-sm-7">
+                        <h2>《<%=articleList[i].title%>》</h2>
+                        <br>
+                        <p>&nbsp;&nbsp;<%=articleList[i].brief%></p>
+                        <br>
+                        <p>&nbsp;&nbsp;<a class="btn btn-primary btn-large" href="/<%=articleList[i].id%>.html">查看详情 &raquo;</a></p>
+                        <p class="pull-right col-md-9">
+                            <span class="col-md-6">发表:<%=articleList[i].pubtime%></span>
+                            <span class="col-md-3">浏览数(<%=articleList[i].hits%>)</span>
+                            <span class="col-md-3">点赞(<%=articleList[i].good%>)</span>
+                        </p>
+                    </div>
+                </div>
+            </div><!--/span-->
+
+            <% } %>
+
+            <div class="panel panel-default ">
+                <div class="panel-body ">
+                    <div class="pages">
+                        <div id="Pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/row-->
+    </div><!--/row-->
+
+    <div class="col-sm-3">
+
+        <% include right.html %>
+
+    </div>
+</div>
+</div>
+<% include footer.html %>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var totalPage = '<%=totalPage%>';
+        var page = '<%=currentPage%>';
+        $("#Pagination").pagination(totalPage, {current_page: (page - 1), link_to: '/'});
+
+    });
+
+</script>
+

@@ -1,0 +1,115 @@
+<div class="row-fluid">
+    <!-- 搜索-->
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    搜索
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="/list" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="key">
+                                       <span class="input-group-btn">
+                                          <button class="btn btn-default" type="submit">
+                                              搜索
+                                          </button>
+                                       </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 热门标签-->
+    <div class="col-xs-12" style="margin-top: 5%">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    热门标签
+                </h3>
+            </div>
+            <div class="panel-body">
+
+                <ul>
+
+                    <li>
+                        <% for(var i=0;i < tagList.length;i++){ %>
+
+                          <a href="/list?id=<%=tagList[i].id%>" class="col-xs-5 label label-success" style="margin-left: 7px;margin-bottom: 15px"><%=tagList[i].tagname%></a>
+
+                        <% } %>
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- 最新文章-->
+    <div class="col-xs-12" style="margin-top: 5%">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    最新文章
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <% for(var i=0;i < articleNews.length;i++){ %>
+
+                    <tr>
+                        <td><a href="/<%=articleNews[i].id%>.html"><%=articleNews[i].title%></a></td>
+                        <td><%=articleNews[i].pubtime%></td>
+                    </tr>
+
+                    <% } %>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!--文章分类-->
+    <div class="col-xs-12" style="margin-top: 5%">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    文章分类
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+
+
+                    <% for(var i=0;i < tagCounts.length;i++){ %>
+
+                      <li><a href="/list?id=<%=tagCounts[i].id%>"><%=tagCounts[i].tagname%>(<%=tagCounts[i].nums%>)</a></li>
+
+                    <% } %>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--文章存档-->
+    <div class="col-xs-12" style="margin-top: 5%">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    文章存档
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <% for(var i=0;i < archives.length;i++){ %>
+
+                    <li><a href="/list?date=<%=archives[i].date%>"><%=archives[i].date%>(<%=archives[i].count%>)</a></li>
+
+                    <% } %>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

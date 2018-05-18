@@ -1,0 +1,137 @@
+<% include header.html %>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-sm-9">
+            <!--文章详情-->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <h1 class="text-center" > <label id="title"></label></h1>
+                    <hr>
+                    <div class="col-sm-12">
+                         <ul class="pagination" >
+                             <li style="padding-left: 120px" >发表时间:<label id="pubtime">2016年05月12日</label> </li>
+                             <li style="padding-left: 30px">浏览数:<label id="views">100</label></li>
+                             <li style="padding-left: 30px">标签:<label id="tag">PHP</label></li>
+                         </ul>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr>
+                        <div class="col-sm-1" ></div>
+                        <div class="col-sm-10" id="content"></div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                    <div class="col-sm-12 " style="padding-top: 50px">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-canter">
+                            <a class="good" style="cursor: pointer">顶一个<i class="glyphicon glyphicon-thumbs-up">(<span id="good">0</span>)</i></a>
+                            <a class="bad" style="padding-left: 50px;cursor: pointer">踩一个<i class="glyphicon glyphicon-thumbs-down">(<span id="bad">0</span>)</i></a>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr>
+                        <div class="col-sm-5">
+                            <% if(updowns[0].length >0) {%>
+                            <a href="/<%=updowns[0][0].id%>.html">
+                                <i class="glyphicon glyphicon-step-backward"></i>上一篇&nbsp;&nbsp;(<%=updowns[0][0].title%>)
+                            </a>
+                            <% } %>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5 text-right">
+                            <% if(updowns[1].length >0) {%>
+                                <a href="/<%=updowns[1][0].id%>.html">
+                                    (<%=updowns[1][0].title%>)&nbsp;&nbsp;下一篇<i class="glyphicon glyphicon-step-forward"></i>
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr>
+                       <!-- JiaThis Button BEGIN -->
+                        <div class="jiathis_style">
+                            <span class="jiathis_txt">分享到：</span>
+                            <a class="jiathis_button_tools_1"></a>
+                            <a class="jiathis_button_tools_2"></a>
+                            <a class="jiathis_button_tools_3"></a>
+                            <a class="jiathis_button_tools_4"></a>
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+                            <a class="jiathis_counter_style"></a>
+                        </div>
+                        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                        <!-- JiaThis Button END -->
+                    </div>
+                    <div class="col-sm-12">
+                        <hr>
+                        <!-- UY BEGIN -->
+                        <div id="uyan_frame"></div>
+                        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2098228"></script>
+                        <!-- UY END -->
+                    </div>
+                 </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+
+                <% include right.html %>
+
+            </div>
+    </div>
+ </div>
+<% include footer.html %>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        //获取文章信息
+        $.get(
+                '/article/queryById',
+                {
+                    id:'<%=aid%>'
+                },
+                function(data){
+
+                    $("#title").text(data.article.title);
+                    $("#pubtime").text(data.article.pubtime);
+                    $("#views").text(data.article.hits);
+                    $("#tag").text(data.article.tag.tagname);
+                    $("#good").text(data.article.good);
+                    $("#bad").text(data.article.bad);
+                    $("#content").html(md.render(data.article.content));
+                },
+                "json"
+        );
+      //点赞
+       $(".good").click(function(){
+           $.get(
+                   '/good',
+                   {
+                       id:'<%=aid%>'
+                   },
+                   function(data){
+
+                       layer.msg(data.msg, {icon: 1});
+                       var good = $("#good").text();
+                       $("#good").text(parseInt(good) +1);
+                   },
+                   "json"
+           );
+       });
+        //踩
+        $(".bad").click(function(){
+            $.get(
+                    '/bad',
+                    {
+                        id:'<%=aid%>'
+                    },
+                    function(data){
+
+                        layer.msg(data.msg, {icon: 1});
+                        var good = $("#bad").text();
+                        $("#bad").text(parseInt(good) +1);
+                    },
+                    "json"
+            );
+        });
+    });
+</script>

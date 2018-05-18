@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客后台系统</title>
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/layer/layer.js" ></script>
+    <style type="text/css">
+
+        body{
+
+            padding-top: 70px;/*有顶部固定导航条时设置*/
+            padding-bottom: 70px;/*有底部固定导航条时设置*/
+            background: url("/images/background/bg.jpg") no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                管理员登陆
+            </h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" action="/admin/login" method="post">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-4 control-label">账号</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="firstname" name="username" placeholder="请输入名字" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-4 control-label">密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> 请记住我
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-7">
+                        <button type="submit" class="btn btn-primary btn-md">登录</button>
+                        <button type="button" id="register" class="btn btn-success btn-md">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="navbar-fixed-bottom">
+    <div class="container text-center">
+        <span>Copyright © 2018</span>
+    </div>
+</footer>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $('#register').click(function () {
+            location.href = '/admin/register'
+        })
+        <% if(error) { %>
+
+            layer.msg('<%=error%>');
+
+        <% } %>
+    });
+</script>
+</body>
+</html>
